@@ -12,6 +12,15 @@ export type Filter = "all" | "active" | "completed"
 
 const STORAGE_KEY = "todos-effect-atom"
 
+/** Generate a unique ID, with fallback for environments without crypto.randomUUID */
+function generateId(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID()
+  }
+  // Fallback for older browsers
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 11)}`
+}
+
 /** Load todos from localStorage */
 function loadTodos(): readonly Todo[] {
   try {
@@ -94,7 +103,7 @@ export const addTodoAtom = Atom.writable<readonly Todo[], string>(
     const trimmed = title.trim()
     if (!trimmed) return
     const todo: Todo = {
-      id: crypto.randomUUID(),
+      id: generateId(),
       title: trimmed,
       completed: false
     }

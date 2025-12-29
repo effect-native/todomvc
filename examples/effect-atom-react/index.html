@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" data-framework="effect-atom-react">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TodoMVC - Effect-Atom + React</title>
+    <link rel="stylesheet" href="https://unpkg.com/todomvc-common@1.0.5/base.css">
+    <link rel="stylesheet" href="https://unpkg.com/todomvc-app-css@2.4.3/index.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <footer class="info">
+      <p>Double-click to edit a todo</p>
+      <p>Created with <a href="https://github.com/tim-smart/effect-atom">effect-atom</a></p>
+      <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+    </footer>
+    <script type="module">
+      // Dynamically load the built bundle
+      // First, we need to find the actual chunk filename from dist/index.html
+      fetch('./dist/index.html')
+        .then(r => r.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          
+          // Find and load CSS
+          const cssLink = doc.querySelector('link[rel="stylesheet"]');
+          if (cssLink) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = './dist/' + cssLink.getAttribute('href').replace('./', '');
+            document.head.appendChild(link);
+          }
+          
+          // Find and load JS
+          const jsScript = doc.querySelector('script[type="module"]');
+          if (jsScript) {
+            const script = document.createElement('script');
+            script.type = 'module';
+            script.src = './dist/' + jsScript.getAttribute('src').replace('./', '');
+            document.body.appendChild(script);
+          }
+        });
+    </script>
+  </body>
+</html>

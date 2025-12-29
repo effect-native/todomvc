@@ -36,6 +36,7 @@ const frameworkFolders = {
   'angular-dart': 'angular-dart/web',
   'chaplin-brunch': 'chaplin-brunch/public',
   duel: 'duel/www',
+  'effect-atom-react': 'effect-atom-react/dist',
 }
 const getExampleFolder = framework => frameworkFolders[framework] || framework
 
@@ -58,11 +59,13 @@ const noLocalStorageCheck = {
 
 const noLocalStorageSpyCheck = {
   canjs: true,
-  canjs_require: true
+  canjs_require: true,
+  'effect-atom-react': true
 }
 
 const noAppStartCheck = {
-  mithril: true
+  mithril: true,
+  'effect-atom-react': true
 }
 
 // usually when an app makes localStorage.setItem call we think
