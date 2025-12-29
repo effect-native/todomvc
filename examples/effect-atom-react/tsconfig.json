@@ -40,5 +40,5 @@
     ]
   },
 
-  "exclude": ["dist", "node_modules", "refs"]
+  "exclude": ["dist", "node_modules", "refs", "build.ts"]
 }
